@@ -44,6 +44,12 @@ fn handle_client(mut stream: TcpStream) {
         println!("{}", req);
         if req.contains("PING") {
             stream.write("+PONG\r\n".as_bytes()).unwrap();
+        } else if req.contains("ECHO") {
+
+            let res = req.split_whitespace().last().unwrap();
+            let res = "+".to_owned() + res;
+            let res = res + "\r\n";
+            stream.write(res.as_bytes()).unwrap();
         }
         
     }
